@@ -63,12 +63,9 @@ int main(int argc, char **argv) {
 
     // Checking for the buffer of comming data
     char buffer[1024] = {0};
-    int bytes_recieved = recv(client_fd, (char *) buffer, sizeof(buffer), 0);
-
-    if(strcmp(buffer, "PING") == 0) {
-      const char *message = "+PONG\r\n";
-      int bytes_sent = send(client_fd, message, sizeof(message), 0);
-    }
+    recv(client_fd, (char *) buffer, sizeof(buffer), 0);
+    const char *message = "+PONG\r\n";
+    int bytes_sent = send(client_fd, message, strlen(message), 0);
 
   }
 
