@@ -62,11 +62,12 @@ int main(int argc, char **argv) {
     std::cout << "Client connected\n";
 
     // Checking for the buffer of comming data
+    while(true){
     char buffer[1024] = {0};
     recv(client_fd, (char *) buffer, sizeof(buffer), 0);
     const char *message = "+PONG\r\n";
     int bytes_sent = send(client_fd, message, strlen(message), 0);
-
+   }
   }
 
   close(server_fd);
