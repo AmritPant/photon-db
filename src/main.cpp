@@ -12,7 +12,9 @@
 #include <unistd.h>
 
 // User Header Files
+#include "../include/request-router.h"
 #include "../include/resp-parser.h"
+
 int main(int argc, char **argv) {
     // Flush after every std::cout / std::cerr
     std::cout << std::unitbuf;
@@ -85,13 +87,10 @@ int main(int argc, char **argv) {
                     } else {
                         // Sending the message
                         client_buffers[client_fd] = buffer;
-                        std::vector<std::string> parsed_messages;
+                        std::string response;
+                        response = request_router(client_buffers[client_fd].c_str());
 
-                        parser(client_buffers[client_fd].c_str(), parsed_messages);
-
-                        
-
-                        const char *message = "+PONG\r\n";
+                        const char *message = response.c_str();
                         int bytes_sent = send(client_fd, message, strlen(message), 0);
                     }
                 }
