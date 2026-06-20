@@ -5,6 +5,8 @@
 #include <iostream>
 #include <map>
 #include <netdb.h>
+#include <unordered_map>
+#include <vector>
 #include <poll.h>
 #include <string>
 #include <sys/socket.h>

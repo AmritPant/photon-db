@@ -1,0 +1,8 @@
+build/
+.git/
+a.out
+server
+client
+*.o
+*.obj
+vcpkg_installed/

@@ -1,0 +1,22 @@
+services:
+  dev:
+    build: .
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    ports:
+      - "6379:6379"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+  server:
+    build: .
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    ports:
+      - "6379:6379"
+    command: ./your_program.sh
