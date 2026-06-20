@@ -91,20 +91,6 @@ If things work, you should see a `+PONG` reply.
 
 ---
 
-## Pushing to CodeCrafters
-
-When you want to submit a stage to CodeCrafters:
-
-```bash
-git add .
-git commit -m "describe your change"
-git push origin master
-```
-
-CodeCrafters will test your code on their servers. You do not need Docker for that step — just push your changes.
-
----
-
 ## Problems?
 
 **"Cannot connect to Docker"** — Open Docker Desktop and wait until it is fully started, then try again.
