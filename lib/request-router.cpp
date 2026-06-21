@@ -32,6 +32,10 @@ std::string request_router(const char *buffer) {
         resp = echo_command_handler(command_array[1]);
     } else if (command_array[0] == "COMMAND") {
         resp = "+PONG\r\n";
+    } else if (command_array[0] == "SET") {
+        resp = set_command_handler(command_array[1], command_array[2]);
+    } else if (command_array[0] == "GET") {
+        resp = get_command_handler(command_array[1]);
     }
 
     return resp;
