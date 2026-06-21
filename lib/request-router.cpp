@@ -5,9 +5,11 @@
 #include "../include/request-router.h"
 #include "../include/resp-parser.h"
 
-// Commabnd Handler
+// Command Handler
 #include "../include/request-handler/echo-command-handler.h"
 #include "../include/request-handler/ping-command-handler.h"
+#include "../include/request-handler/set-command-handler.h"
+#include "../include/request-handler/get-command-handler.h"
 
 void upper(std::string &text) {
     for (int i = 0; i < text.length(); i++) {
