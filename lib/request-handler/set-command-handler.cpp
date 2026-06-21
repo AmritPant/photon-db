@@ -1,3 +1,4 @@
+#include "../include/request-handler/set-command-handler.h"
 #include "store.cpp"
 
 std::string(set_command_handler(const std::string &key, const std::string &value)) {
