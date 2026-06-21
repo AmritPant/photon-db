@@ -4,6 +4,7 @@
 // User Defined Header files
 #include "../include/request-router.h"
 #include "../include/resp-parser.h"
+#include "../include/store.h"
 
 // Command Handler
 #include "../include/request-handler/echo-command-handler.h"

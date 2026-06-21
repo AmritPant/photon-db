@@ -1,7 +1,7 @@
 #include "../include/request-handler/get-command-handler.h"
-#include "store.cpp"
+#include "../include/store.h"
 
-std::string(get_command_handler(const std::string &key)) {
+std::string get_command_handler(const std::string &key) {
     auto &store = get_store();
     auto it = store.find(key);
     if (it != store.end()) {
