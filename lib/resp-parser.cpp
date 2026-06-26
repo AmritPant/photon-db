@@ -56,3 +56,34 @@ std::string text_to_resp(const std::string text) {
 
     return resp;
 }
+
+std::string bulk_text_to_resp(const std::string &text) {
+    std::string resp;
+    resp.append("$");
+    resp.append(std::to_string(text.length()));
+    resp.append("\r\n");
+    resp.append(text);
+    resp.append("\r\n");
+
+    return resp;
+}
+
+std::string null_bulk_to_resp() { return "$-1\r\n"; }
+
+std::string integer_to_resp(int value) {
+    std::string resp;
+    resp.append(":");
+    resp.append(std::to_string(value));
+    resp.append("\r\n");
+
+    return resp;
+}
+
+std::string error_to_resp(const std::string &message) {
+    std::string resp;
+    resp.append("-ERR ");
+    resp.append(message);
+    resp.append("\r\n");
+
+    return resp;
+}
