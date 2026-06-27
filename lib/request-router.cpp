@@ -33,7 +33,10 @@ std::string request_router(const char *buffer) {
     } else if (command_array[0] == "COMMAND") {
         resp = "+PONG\r\n";
     } else if (command_array[0] == "SET") {
-        resp = set_command_handler(command_array[1], command_array[2]);
+        if (command_array.size() > 4) {
+            resp = set_command_handler(command_array[1], command_array[2], 
+                command_array[3], command_array[4]);
+        } else resp = set_command_handler(command_array[1], command_array[2]);
     } else if (command_array[0] == "GET") {
         resp = get_command_handler(command_array[1]);
     }
