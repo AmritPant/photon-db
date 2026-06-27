@@ -66,4 +66,13 @@ std::string bulk_string_resp(const std::string &value) {
     resp.append("\r\n");
 
     return resp;
-   }
+}
+
+std::string longlong_resp(long long value) {
+    std::string resp;
+    resp.append(":");
+    resp.append(std::to_string(value));
+    resp.append("\r\n");
+
+    return resp;
+}
