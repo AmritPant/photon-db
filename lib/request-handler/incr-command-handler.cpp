@@ -11,7 +11,7 @@ std::string incr_command_handler(const std::string &key) {
     try {
         if (it==store.end() || is_expired(it->second)) {
             set_command_handler(key, "1"); // Set the key to 1 if it doesn't exist
-            return integer_resp(1); // RESP Integer
+            return longlong_resp(1); // RESP Long Long Integer
         }
         if (std::isspace(it->second.value[0])) {
             return "-ERR value is not an integer or out of range\r\n"; // RESP Error
