@@ -11,6 +11,7 @@
 #include "../include/request-handler/ping-command-handler.h"
 #include "../include/request-handler/set-command-handler.h"
 #include "../include/request-handler/get-command-handler.h"
+#include "../include/request-handler/incr-command-handler.h"
 
 void upper(std::string &text) {
     for (int i = 0; i < text.length(); i++) {
@@ -39,7 +40,9 @@ std::string request_router(const char *buffer) {
         } else resp = set_command_handler(command_array[1], command_array[2]);
     } else if (command_array[0] == "GET") {
         resp = get_command_handler(command_array[1]);
-    }
-
+    } else if (command_array[0] == "INCR") {
+        resp = incr_command_handler(command_array[1]);
+    } 
+    
     return resp;
 }
