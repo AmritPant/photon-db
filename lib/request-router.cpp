@@ -12,6 +12,8 @@
 #include "../include/request-handler/incr-command-handler.h"
 #include "../include/request-handler/decr-command-handler.h"
 #include "../include/request-handler/type-command-handler.h"
+#include "../include/request-handler/rpush-handler.h"
+
 void upper(std::string &text) {
     for (int i = 0; i < text.length(); i++) {
         text[i] = toupper(text[i]);
@@ -41,9 +43,14 @@ std::string request_router(const char *buffer) {
         resp = decr_command_handler(command_array[1]);
     } else if (command_array[0] == "TYPE") {
         resp = type_command_handler(command_array[1]);
-    } else {
+    } 
+     else if (command_array[0] == "RPUSH") {
+        return handle_rpush(command_array);
+    }
+    else {
         resp = "-ERR unknown command\r\n";
     }
+    
     
     return resp;
 }
