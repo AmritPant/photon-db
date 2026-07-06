@@ -1,28 +1,37 @@
-
-// rpush-handler.cpp
+// User defined
 #include "../../include/request-handler/rpush-handler.h"
+#include "../../include/resp-parser.h" // wherever longlong_resp lives on your team
 #include "../../include/store.h"
-#include "../../include/resp-parser.h"   // wherever longlong_resp lives on your team
-#include<mutex>
+
+// Libraries
+#include <unordered_map>
+#include <vector>
+
 std::string handle_rpush(std::vector<std::string> command_array) {
     if (command_array.size() < 3) {
         return "-ERR wrong number of arguments for 'rpush' command\r\n";
     }
 
     std::string key = command_array[1];
-    size_t new_length = 0;
+    std::unordered_map<std::string, std::vector<std::string>> &lists = get_lists();
 
-    {
-        std::lock_guard<std::mutex> clock(get_store.mtx);
-        auto &target_list = get_store(key);   // creates an empty deque if key is new — stage 1!
-
+    // Inserting Value Inside the lists
+    if (command_array[0] == "RPUSH") {
         for (size_t i = 2; i < command_array.size(); i++) {
-            target_list.push_back(command_array[i]); // stages 2 & 3: same loop either way
+            lists[key].push_back(command_array[i]);
         }
-        new_length = target_list.size();
-    } // mutex auto-unlocks here
+    } else if (command_array[0] == "LPUSH") {
+        for (size_t i = (command_array.size() - 1); i > 1; i--) {
+            lists[key].push_back(command_array[i]);
+        }
+    }
 
-   // get_store.cv.notify_all(); // wake any BLPOP threads waiting on this key
-    return longlong_resp(new_length);
-    
+    // Getting number of elements in String
+    // std::string response_string = std::to_string(lists[key].size());
+    long long size = lists[key].size();
+
+    // Converting that String into Resp Format
+    std::string response_resp = longlong_resp(size);
+
+    return response_resp;
 }

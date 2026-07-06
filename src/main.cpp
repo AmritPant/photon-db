@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
                         client_buffers.erase(client_fd);
                     } else {
                         // Sending the message
-                        client_buffers[client_fd] = buffer;
+                        client_buffers[client_fd] = std::string(buffer, bytes_received);
                         std::string response;
                         response = request_router(client_buffers[client_fd].c_str());
                         const char *message = response.c_str();

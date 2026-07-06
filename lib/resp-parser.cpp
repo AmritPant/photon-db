@@ -60,7 +60,11 @@ std::string text_to_resp(const std::string text) {
 std::string bulk_string_resp(const std::string &value) {
     std::string resp;
     resp.append("$");
-    resp.append(std::to_string(value.length()));
+    if (value.length() == 0) {
+        resp.append(std::to_string(-1));
+    } else {
+        resp.append(std::to_string(value.length()));
+    }
     resp.append("\r\n");
     resp.append(value);
     resp.append("\r\n");
@@ -73,6 +77,19 @@ std::string longlong_resp(long long value) {
     resp.append(":");
     resp.append(std::to_string(value));
     resp.append("\r\n");
+
+    return resp;
+}
+
+std::string array_to_resp(const std::vector<std::string> &list) {
+    size_t size = list.size();
+    std::string resp;
+    resp.append("*");
+    resp.append(std::to_string(size));
+    resp.append("\r\n");
+    for (size_t i = 0; i < size; i++) {
+        resp.append(bulk_string_resp(list.at(i)));
+    }
 
     return resp;
 }
