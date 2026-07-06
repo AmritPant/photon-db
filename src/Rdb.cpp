@@ -2,7 +2,7 @@
 #include "config.hpp"
 #include "RdbParser.hpp"
 
-int main(int argc, char* argv[]) {
+int test_rdb_main(int argc, char* argv[]) {
     try {
         Config config = parse_args(argc, argv);
         std::filesystem::path target_rdb = config.get_rdb_path();
