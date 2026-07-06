@@ -7,10 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-# 1. Automatically grab all the individual command handlers from inside the subdirectory
 file(GLOB HANDLER_FILES "lib/request-handler/*.cpp")
 
-# 2. List the specific server core files explicitly (Excludes lib/client.cpp)
 set(SERVER_CORE_FILES
     src/main.cpp
     src/aof.cpp
