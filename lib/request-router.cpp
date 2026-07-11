@@ -14,6 +14,7 @@
 #include "../include/request-handler/xread-command-handler.h"
 #include "../include/request-handler/multi-command-handler.h"
 #include "../include/request-handler/exec-command-handler.h"
+#include "../include/request-handler/discard-command-handler.h"
 
 void upper(std::string &text) {
     for (int i = 0; i < text.length(); i++) {
@@ -33,6 +34,8 @@ std::string dispatch_command(std::vector<std::string> &command_array, ClientStat
         resp = multi_command_handler(client);
     } else if (command_array[0] == "EXEC") {
         resp = exec_command_handler(client);
+    } else if (command_array[0] == "DISCARD") {
+    resp = discard_command_handler(client);
     } else if (command_array[0] == "SET") {
         if (command_array.size() > 4) {
             resp = set_command_handler(command_array[1], command_array[2], 
