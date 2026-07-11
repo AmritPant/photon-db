@@ -17,4 +17,5 @@
 #include "request-handler/multi-command-handler.h"
 
 void upper(std::string &text);
+std::string dispatch_command(std::vector<std::string> &command_array, ClientState &client);
 std::string request_router(const char *buffer, ClientState &client);
