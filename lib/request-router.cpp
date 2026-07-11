@@ -24,6 +24,16 @@ std::string request_router(const char *buffer, ClientState &client) {
     std::vector<std::string> command_array;
     resp_to_text(buffer, command_array);
     upper(command_array[0]);
+
+    if (client.in_multi &&
+        command_array[0] != "MULTI" &&
+        command_array[0] != "EXEC" &&
+        command_array[0] != "DISCARD") {
+
+        client.tx_queue.push_back(command_array);
+        return "+QUEUED\r\n";
+    }
+
     std::string resp;
     if (command_array[0] == "PING") {
         resp = ping_command_handler();
