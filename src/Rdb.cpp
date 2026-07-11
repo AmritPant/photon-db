@@ -1,4 +1,3 @@
-#include <iostream>
 #include "../include/config.hpp"
 #include "../include/RdbParser.hpp"
 

@@ -18,9 +18,9 @@
 #include "../include/resp-parser.h"
 #include "../include/aof.hpp"      // <-- Pull in AOF Subsystem Manager
 #include "../include/store.h"    // <-- Pull in get_store() reference mappings
-
 #include "../include/store.h"
 #include "../include/client-state.h"
+
 
 int main(int argc, char **argv) {
     // Flush after every std::cout / std::cerr
@@ -85,6 +85,7 @@ int main(int argc, char **argv) {
     int client_addr_len = sizeof(client_addr);
     std::cout << "Waiting for a client to connect...\n";
     std::unordered_map<int, ClientState> clients;
+
     while (true) {
         // Blocking until first request arrives
         poll(pagers.data(), pagers.size(), -1);
@@ -112,6 +113,7 @@ int main(int argc, char **argv) {
                     } else {
                         // Sending the message
                         clients[client_fd].buffer = buffer;
+
                         std::string response;
                         response = request_router(clients[client_fd].buffer.c_str(), clients[client_fd]);
                         const char *message = response.c_str();
