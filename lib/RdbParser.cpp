@@ -1,4 +1,4 @@
-#include "RdbParser.hpp"
+#include "../include/RdbParser.hpp"
 #include <stdexcept>
 
 RdbParser::RdbParser(const std::filesystem::path& path) {

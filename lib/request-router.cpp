@@ -12,6 +12,8 @@
 #include "../include/request-handler/xadd-command-handler.h"
 #include "../include/request-handler/xrange-command-handler.h"
 #include "../include/request-handler/xread-command-handler.h"
+#include "../include/request-handler/multi-command-handler.h"
+
 void upper(std::string &text) {
     for (int i = 0; i < text.length(); i++) {
         text[i] = toupper(text[i]);

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "config.hpp"
-#include "RdbParser.hpp"
+#include "../include/config.hpp"
+#include "../include/RdbParser.hpp"
 
 int test_rdb_main(int argc, char* argv[]) {
     try {

@@ -16,8 +16,8 @@
 // User Header Files
 #include "../include/request-router.h"
 #include "../include/resp-parser.h"
-#include "aof.hpp"      // <-- Pull in AOF Subsystem Manager
-#include "store.h"    // <-- Pull in get_store() reference mappings
+#include "../include/aof.hpp"      // <-- Pull in AOF Subsystem Manager
+#include "../include/store.h"    // <-- Pull in get_store() reference mappings
 
 #include "../include/store.h"
 #include "../include/client-state.h"
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
                         // Sending the message
                         clients[client_fd].buffer = buffer;
                         std::string response;
-                        response = request_router(clients[client_fd].buffer.c_str());
+                        response = request_router(clients[client_fd].buffer.c_str(), clients[client_fd]);
                         const char *message = response.c_str();
                         int bytes_sent = send(client_fd, message, strlen(message), 0);
                     }
