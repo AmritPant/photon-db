@@ -5,5 +5,7 @@ std::string exec_command_handler(ClientState &client) {
         return "-ERR EXEC without MULTI\r\n";
     }
 
+    client.in_multi = false;  
+
     return "*0\r\n";
 }
