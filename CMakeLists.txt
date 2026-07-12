@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-file(GLOB HANDLER_FILES "lib/request-handler/*.cpp")
+file(GLOB HANDLER_FILES "lib/request-handler/*.cpp" "lib/request-handler/list-commands/*.cpp")
 
 set(SERVER_CORE_FILES
     src/main.cpp
@@ -17,6 +17,7 @@ set(SERVER_CORE_FILES
     lib/request-router.cpp
     lib/resp-parser.cpp
     lib/store.cpp
+    lib/stream-store.cpp
 )
 
 # Combine your core server files and the individual command handlers

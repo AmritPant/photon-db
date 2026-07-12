@@ -5,6 +5,11 @@ std::unordered_map<std::string, Entry> &get_store(){
     return store;
 }
 
+std::unordered_map<std::string, std::vector<std::string>> &get_lists() {
+    static std::unordered_map<std::string, std::vector<std::string>> lists;
+    return lists;
+}
+
 bool is_expired(const Entry &entry){
     if (!entry.expiry.has_value()) {
         return false; // No expiry set, so it's not expired
