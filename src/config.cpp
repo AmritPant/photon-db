@@ -1,4 +1,4 @@
-#include "config.hpp"
+#include "../include/config.hpp"
 #include <vector>
 
 std::filesystem::path Config::get_rdb_path() const {

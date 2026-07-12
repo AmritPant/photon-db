@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     tar \
     pkg-config \
     netcat-openbsd \
+    redis-tools \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth 1 https://github.com/microsoft/vcpkg.git ${VCPKG_ROOT} \
