@@ -76,3 +76,16 @@ std::string longlong_resp(long long value) {
 
     return resp;
 }
+
+std::string array_to_resp(const std::vector<std::string> &list) {
+    size_t size = list.size();
+    std::string resp;
+    resp.append("*");
+    resp.append(std::to_string(size));
+    resp.append("\r\n");
+    for (size_t i = 0; i < size; i++) {
+        resp.append(bulk_string_resp(list.at(i)));
+    }
+
+    return resp;
+}

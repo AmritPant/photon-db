@@ -15,6 +15,11 @@
 #include "../include/request-handler/multi-command-handler.h"
 #include "../include/request-handler/exec-command-handler.h"
 #include "../include/request-handler/discard-command-handler.h"
+// List Command Handlers
+#include "../include/request-handler/rpush-handler.h"
+#include "../include/request-handler/list-commands/lrange-command-handler.h"
+#include "../include/request-handler/list-commands/llen-command-handler.h"
+#include "../include/request-handler/list-commands/lpop-command-handler.h"
 
 void upper(std::string &text) {
     for (int i = 0; i < text.length(); i++) {
@@ -59,6 +64,17 @@ std::string dispatch_command(std::vector<std::string> &command_array, ClientStat
         }
     } else if (command_array[0] == "XREAD") {
         resp = xread_command_handler(command_array);
+    }
+    // List Commands
+    // Handles both "RPUSH" & "LPUSH"
+    else if (command_array[0] == "RPUSH" || command_array[0] == "LPUSH") {
+        resp = handle_rpush(command_array);
+    } else if (command_array[0] == "LRANGE") {
+        resp = lrange_command_handler(command_array);
+    } else if (command_array[0] == "LLEN") {
+        resp = llen_command_handler(command_array);
+    } else if (command_array[0] == "LPOP") {
+        resp = lpop_command_handler(command_array);
     } else {
         resp = "-ERR unknown command\r\n";
     }
