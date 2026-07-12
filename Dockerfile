@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     tar \
     pkg-config \
     netcat-openbsd \
+    redis-cli \
     redis-tools \
     && rm -rf /var/lib/apt/lists/*
 
