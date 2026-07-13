@@ -16,8 +16,11 @@
 // User Header Files
 #include "../include/request-router.h"
 #include "../include/resp-parser.h"
-#include "aof.hpp"      // <-- Pull in AOF Subsystem Manager
-#include "store.h"    // <-- Pull in get_store() reference mappings
+#include "../include/aof.hpp"      // <-- Pull in AOF Subsystem Manager
+#include "../include/store.h"    // <-- Pull in get_store() reference mappings
+#include "../include/store.h"
+#include "../include/client-state.h"
+
 
 int main(int argc, char **argv) {
     // Flush after every std::cout / std::cerr
@@ -81,7 +84,7 @@ int main(int argc, char **argv) {
     struct sockaddr_in client_addr;
     int client_addr_len = sizeof(client_addr);
     std::cout << "Waiting for a client to connect...\n";
-    std::unordered_map<int, std::string> client_buffers;
+    std::unordered_map<int, ClientState> clients;
 
     while (true) {
         // Blocking until first request arrives
@@ -92,6 +95,9 @@ int main(int argc, char **argv) {
                     int client_fd = accept(server_fd, (struct sockaddr *)&client_addr, (socklen_t *)&client_addr_len);
                     std::cout << "Client connected\n";
                     pagers.push_back({client_fd, POLLIN, 0});
+                    ClientState new_client;
+                    new_client.fd = client_fd;
+                    clients[client_fd] = new_client;
                 } else {
                     // Receiving the message
                     int client_fd = pagers[i].fd;
@@ -102,18 +108,14 @@ int main(int argc, char **argv) {
                         std::cout << "Client Disconnected Successfully\n";
                         close(client_fd);
                         pagers.erase(pagers.begin() + i);
-                        client_buffers.erase(client_fd);
+                        // Erasing
+                        clients.erase(client_fd);
                     } else {
-                        client_buffers[client_fd] = buffer;
-
-                        // --- 4. Week 3 Task: Intercept incoming mutations ---
-                        // We pass the raw buffer string elements array directly into our AOF persistence engine
-                        // Modify this parsing step to map to your specific custom resp-parser output if needed
-                        // e.g., std::vector<std::string> components = parse_resp(client_buffers[client_fd]);
-                        //       AOFManager::getInstance().appendCommand(components);
+                        // Sending the message
+                        clients[client_fd].buffer = buffer;
 
                         std::string response;
-                        response = request_router(client_buffers[client_fd].c_str());
+                        response = request_router(clients[client_fd].buffer.c_str(), clients[client_fd]);
                         const char *message = response.c_str();
                         int bytes_sent = send(client_fd, message, strlen(message), 0);
                     }

@@ -1,5 +1,5 @@
-#include "aof.hpp"
-#include "store.h"  // <-- Connects directly to get_store() definition
+#include "../include/aof.hpp"
+#include "../include/store.h"  // <-- Connects directly to get_store() definition
 #include <iostream>
 #include <fstream>
 #include <sstream>
