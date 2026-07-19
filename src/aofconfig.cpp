@@ -3,11 +3,11 @@
 
 struct AofConfig {
 
-    bool use_rdb_preamble = true;          // aof-use-rdb-preamble yes
+    bool use_rdb_preamble = true;           // aof-use-rdb-preamble yes
     bool no_appendfsync_on_rewrite = false; // no-appendfsync-on-rewrite no
-    
+
     bool append_only = false;
-    std::string append_filename = "appendonly.aof"; //Name of persistent log file
+    std::string append_filename = "appendonly.aof"; // Name of persistent log file
 };
 
 struct ServerConfig {
@@ -24,8 +24,3 @@ void print_current_aof_config() {
     std::cout << "no-appendfsync-on-rewrite: " << (g_config.aof.no_appendfsync_on_rewrite ? "yes" : "no") << std::endl;
 }
 
-int main() {
-    // Verify default options are initialized correctly
-    print_current_aof_config();
-    return 0;
-}
