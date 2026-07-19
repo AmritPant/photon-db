@@ -1,6 +1,6 @@
-#ifndef RDB_PARSER_HPP
-#define RDB_PARSER_HPP
+#pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -28,6 +28,4 @@ public:
     void parse_header();
     std::string read_string();
     std::vector<RdbEntry> parse_db_entries();
-};
-
-#endif // RDB_PARSER_HPP
+}; 
