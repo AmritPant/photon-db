@@ -20,6 +20,7 @@
 #include "../include/store.h"    // <-- Pull in get_store() reference mappings
 #include "../include/store.h"
 #include "../include/client-state.h"
+#include "../include/RdbParser.hpp"
 
 
 int main(int argc, char **argv) {
@@ -46,6 +47,18 @@ int main(int argc, char **argv) {
 
     // --- 3. Week 3 Task: Replay log files to restore memory state on startup ---
     AOFManager::getInstance().replayLog();
+
+    // --- 4. RDB Loading: Restore snapshot state if dump file exists ---
+    std::string rdb_file_path = "dump.rdb"; // adjust path or pull from config if needed
+    try {
+        RdbParser rdb_parser(rdb_file_path);
+        rdb_parser.parse_header();
+        rdb_parser.parse_db_entries();
+        std::cout << "[RDB] Snapshot successfully loaded from " << rdb_file_path << "\n";
+    } catch (const std::exception& e) {
+        // dump.rdb might not exist on first boot, which is expected
+        std::cout << "[RDB] Note: Could not load RDB (" << e.what() << "). Starting clean/AOF-only.\n";
+    }
 
     // 1) Creating A Socket
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
