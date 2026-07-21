@@ -11,6 +11,7 @@ vcpkg_installed/
 # Persistence files generated at runtime
 *.rdb
 appendonly.aof
+appendonly.aof.manifest
 
 # OS junk
 .DS_Store
