@@ -1,6 +1,8 @@
 #include "../include/request-router.h"
 #include "../include/resp-parser.h"
 #include "../include/store.h"
+#include "../include/aof.hpp"
+
 // Command Handler
 #include "../include/request-handler/echo-command-handler.h"
 #include "../include/request-handler/ping-command-handler.h"
@@ -22,12 +24,18 @@
 #include "../include/request-handler/list-commands/lpop-command-handler.h"
 
 void upper(std::string &text) {
-    for (int i = 0; i < text.length(); i++) {
+    for (size_t i = 0; i < text.length(); i++) {
         text[i] = toupper(text[i]);
     }
 }
 
 std::string dispatch_command(std::vector<std::string> &command_array, ClientState &client) {
+    if (command_array.empty()) {
+        return "-ERR empty command\r\n";
+    }
+
+    AOFManager::getInstance().appendCommand(command_array);
+
     std::string resp;
     if (command_array[0] == "PING") {
         resp = ping_command_handler();
@@ -40,7 +48,7 @@ std::string dispatch_command(std::vector<std::string> &command_array, ClientStat
     } else if (command_array[0] == "EXEC") {
         resp = exec_command_handler(client);
     } else if (command_array[0] == "DISCARD") {
-    resp = discard_command_handler(client);
+        resp = discard_command_handler(client);
     } else if (command_array[0] == "SET") {
         if (command_array.size() > 4) {
             resp = set_command_handler(command_array[1], command_array[2], 
@@ -84,6 +92,8 @@ std::string dispatch_command(std::vector<std::string> &command_array, ClientStat
 std::string request_router(const char *buffer, ClientState &client) {
     std::vector<std::string> command_array;
     resp_to_text(buffer, command_array);
+    if (command_array.empty()) return "-ERR empty command\r\n";
+
     upper(command_array[0]);
 
     if (client.in_multi &&

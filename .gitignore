@@ -24,3 +24,7 @@ Thumbs.db
 
 # Logs
 *.log
+appendonlydir/appendonly.aof
+dump.rdb
+photondb
+appendonlydir/appendonly.aof.manifestphoton-db/
