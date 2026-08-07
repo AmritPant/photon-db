@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.16)
+project(PhotonDBClient LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Qt needs these ON so its "signals/slots" macros work automatically
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+# Find the Qt6 modules we need:
+# Widgets -> buttons, text boxes, windows
+# Network -> QTcpSocket
+find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
+
+add_executable(PhotonDBClient
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+)
+
+target_link_libraries(PhotonDBClient PRIVATE Qt6::Widgets Qt6::Network)

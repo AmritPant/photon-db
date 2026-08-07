@@ -11,6 +11,7 @@ vcpkg_installed/
 # Persistence files generated at runtime
 *.rdb
 appendonly.aof
+appendonly.aof.manifest
 
 # OS junk
 .DS_Store
@@ -26,4 +27,4 @@ Thumbs.db
 appendonlydir/appendonly.aof
 dump.rdb
 photondb
-appendonlydir/appendonly.aof.manifest
+appendonlydir/appendonly.aof.manifestphoton-db/

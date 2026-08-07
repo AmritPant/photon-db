@@ -27,9 +27,11 @@ std::string decr_command_handler(const std::string &key) {
         it->second.value = std::to_string(value);
         return longlong_resp(value); // RESP Long Long Integer
     }
+
     catch (const std::invalid_argument& e) {
         return "-ERR value is not an integer or out of range\r\n"; // RESP Error
     }
+    
     catch (const std::out_of_range& e) {
         return "-ERR value is not an integer or out of range\r\n"; // RESP Error
     }
