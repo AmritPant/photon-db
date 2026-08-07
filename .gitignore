@@ -26,3 +26,4 @@ Thumbs.db
 appendonlydir/appendonly.aof
 dump.rdb
 photondb
+appendonlydir/appendonly.aof.manifest
